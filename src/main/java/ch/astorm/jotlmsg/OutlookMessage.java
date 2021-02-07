@@ -417,7 +417,6 @@ public class OutlookMessage {
         String plainText = getPlainTextBody();
         if(plainText==null) { throw new MessagingException("missing body"); }
         MimeBodyPart body = new MimeBodyPart();
-        body.setFileName("body");
         body.setText(getPlainTextBody(), StandardCharsets.UTF_8.name(), "plain");
         multipart.addBodyPart(body);
         
@@ -573,7 +572,7 @@ public class OutlookMessage {
                 attachStorage.setProperty(new PropertyValue(MAPIProperty.ATTACH_FILENAME, FLAG_READABLE | FLAG_WRITEABLE, StringUtil.getToUnicodeLE(name))); 
                 attachStorage.setProperty(new PropertyValue(MAPIProperty.ATTACH_LONG_FILENAME, FLAG_READABLE | FLAG_WRITEABLE, StringUtil.getToUnicodeLE(name))); 
             }
-            if(mimeType!=null) { attachStorage.setProperty(new PropertyValue(MAPIProperty.ATTACH_MIME_TAG, FLAG_READABLE | FLAG_WRITEABLE, StringUtil.getToUnicodeLE(name))); }
+            if(mimeType!=null) { attachStorage.setProperty(new PropertyValue(MAPIProperty.ATTACH_MIME_TAG, FLAG_READABLE | FLAG_WRITEABLE, StringUtil.getToUnicodeLE(mimeType))); }
             attachStorage.setProperty(new PropertyValue(MAPIProperty.ATTACH_NUM, FLAG_READABLE | FLAG_WRITEABLE, ByteBuffer.allocate(4).putInt(attachmentCounter).array()));
             attachStorage.setProperty(new PropertyValue(MAPIProperty.ATTACH_METHOD, FLAG_READABLE | FLAG_WRITEABLE, ByteBuffer.allocate(4).putInt(1).array())); //ATTACH_BY_VALUE
             attachStorage.setProperty(new PropertyValue(MAPIProperty.ATTACH_DATA, FLAG_READABLE | FLAG_WRITEABLE, data));
